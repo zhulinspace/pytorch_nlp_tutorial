@@ -162,7 +162,7 @@ note:下面这张图的网络结构是来自于pytorch tutorial,链接在文章�
 
 ##### 注意力机制：
 
-![](https://github.com/zhulinspace/pytorch_nlp_tutorial/blob/master/img/types of attention.png)
+![](https://github.com/zhulinspace/pytorch_nlp_tutorial/blob/master/img/types.png)
 
 Bahdanau和Luong最主要的区别是
 
@@ -203,8 +203,8 @@ $$
    
 
    下面这张图详细描述了具体过程
+![](https://github.com/zhulinspace/pytorch_nlp_tutorial/blob/master/img/flow.png)
 
-   ![](https://github.com/zhulinspace/pytorch_nlp_tutorial/blob/master/img/flow of calculating attention weights in bahdanau attetion.png)
 
 ##### Luong attention
 
