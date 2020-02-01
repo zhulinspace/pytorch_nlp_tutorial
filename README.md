@@ -1,4 +1,5 @@
-
+公式显示用mathjax插件，[地址](https://chrome.google.com/webstore/detail/mathjax-plugin-for-github/ioemnmodlmafdkllaclgeombjnmnbima/related)
+无法科学上网：查看我[博客地址](https://blog.csdn.net/zhulinzhulinlin/article/details/104135594)
 # pytorch_nlp_tutorial
 
 ### classify name
