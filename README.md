@@ -1,3 +1,7 @@
+---
+typora-root-url: img
+---
+
 # pytorch_nlp_tutorial
 
 ### classify name
@@ -8,7 +12,7 @@ RNN由两个线性层组成。输入[input,hidden],输出[output,hidden]
 
 每个timestamp 输入都是一个letter（eg.‘ a’），用one_hot vector表示,输出output是在所有语言类别的概率分布
 
-![](img\classfy_name_network'.png)
+![](https://github.com/zhulinspace/pytorch_nlp_tutorial/blob/master/img/classfy_name_network'.png)
 
 输入序列（line),line ,eg for 'Adam' ,输入line需转化为line_tensor，其大小为[line_length x1 x n_letters]，多余的维度1是因为在pytorch中，所有数据都必须是batch_size的  ：That extra 1 dimension is because PyTorch assumes everything is in batches - we’re just using a batch size of 1 here. 
 
@@ -36,7 +40,7 @@ train set: line_tensor ,target_category_tensor
 
 在每个时间节点，输入（category,current letter, hidden state),输出(next letter,next hidden state),
 
-![](img\generate_name_network.png)
+![](https://github.com/zhulinspace/pytorch_nlp_tutorial/blob/master/img/generate_name_network.png)
 
 
 所以我们的训练集必须包括以下：category，input_letters,target_letters
@@ -50,7 +54,7 @@ input_letters如下图包含line的第一个letter到最后一个letter,而targe
 - target_line_tensor:为一维Longtensor,其大小为Line_length,元素为letter在all_letters的索引
 
 
-![](img\generate_name_input_output.png)
+![](https://github.com/zhulinspace/pytorch_nlp_tutorial/blob/master/img/generate_name_input_output.png)
 
 因为有EOS符号，所以在处理训练集会有很多种不同的方法，这里选择处理方式如下，另input_tensor是定长的，而输出长度不是固定的。
 
@@ -128,17 +132,17 @@ pairs:[ line_countx2 ]
 
 seq2seq结构：将input_tensor输入到encoder,可以得到一个context vector，理想情况下可以包含整个输入语句的含义，Decoder预测输出翻译后的语句
 
-![](img\seq2seq.png)
+![](https://github.com/zhulinspace/pytorch_nlp_tutorial/blob/master/img/seq2seq.png)
 
 下面是encoder部分的网络结构，其中gru可以换成LSTM
 
-![](img\encoder-network.png)
+![](https://github.com/zhulinspace/pytorch_nlp_tutorial/blob/master/img/encoder-network.png)
 
 
 
 下面是没有attention机制的decoder
 
-![](img\decoder-network.png)
+![](https://github.com/zhulinspace/pytorch_nlp_tutorial/blob/master/img/decoder-network.png)
 
 
 
@@ -156,11 +160,11 @@ input语句输入到encoder,即在所有的时间节点，encoder RNN对于输�
 
 note:下面这张图的网络结构是来自于pytorch tutorial,链接在文章最低端，其计算对齐分数的方式和下面讲解的都不同。
 
-![](img\attention-decoder-network.png)
+![](https://github.com/zhulinspace/pytorch_nlp_tutorial/blob/master/img/attention-decoder-network.png)
 
 ##### 注意力机制：
 
-![](img\Types of attention.jpg)
+![](https://github.com/zhulinspace/pytorch_nlp_tutorial/blob/master/img/Types of attention.jpg)
 
 Bahdanau和Luong最主要的区别是
 
@@ -202,7 +206,7 @@ $$
 
    下面这张图详细描述了具体过程
 
-   ![](img\Flow of calculating attention weights in bahdanau attetion.jpg)
+   ![](https://github.com/zhulinspace/pytorch_nlp_tutorial/blob/master/img/Flow of calculating attention weights in bahdanau attetion.jpg)
 
 ##### Luong attention
 
@@ -219,17 +223,17 @@ $$
 Loung attention有三种计算注意力的方式：
 
 - Dot ：encoder outputs和decoder hidden矩阵相乘
-  $$
+$$
   socre_{alignment}=H_{encoder} ⋅ H_{decoder}
-  $$
+$$
   
 - general ：和dot类似,只不过加了一个权重矩阵
-  $$
+$$
   socre_{alignment}=W（H_{encoder} ⋅ H_{decoder}）
-  $$
+$$
   
 - concat：这种方式和Bahdanau attention很类似只不过没有各自的参数矩阵，表明encoder outputs和decoder hidden state共享权重矩阵$W_{combined}$
-  $$
+$$
   score_{aligment}=W ⋅
   tanh(W_{combined}(H_{encoder}+H_{decoder}))
   $$
