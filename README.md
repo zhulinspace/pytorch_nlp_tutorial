@@ -1,7 +1,5 @@
----
-typora-root-url: img
----
 
+<script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=default"></script>
 # pytorch_nlp_tutorial
 
 ### classify name
