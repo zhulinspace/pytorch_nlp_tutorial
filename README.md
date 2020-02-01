@@ -12,7 +12,7 @@ RNN由两个线性层组成。输入[input,hidden],输出[output,hidden]
 
 输入序列（line),line ,eg for 'Adam' ,输入line需转化为line_tensor，其大小为[line_length x1 x n_letters]，多余的维度1是因为在pytorch中，所有数据都必须是batch_size的  ：That extra 1 dimension is because PyTorch assumes everything is in batches - we’re just using a batch size of 1 here. 
 
-`
+
 
 ```python
     # 输入一个序列
@@ -22,7 +22,7 @@ RNN由两个线性层组成。输入[input,hidden],输出[output,hidden]
     loss=criterion(output,category_tensor)
 ```
 
-`
+
 
 这里的时间长度T=Line_length,即会有Line_length个output,输入一个序列时，我们选取最后时间节点的output作为预测的语言类别，和真实的语言类别一起放入loss function中
 
@@ -36,7 +36,8 @@ train set: line_tensor ,target_category_tensor
 
 在每个时间节点，输入（category,current letter, hidden state),输出(next letter,next hidden state),
 
-<img src="img\generate_name_network.png" style="zoom:80%;" />
+![](img\generate_name_network.png)
+
 
 所以我们的训练集必须包括以下：category，input_letters,target_letters
 
@@ -48,11 +49,12 @@ input_letters如下图包含line的第一个letter到最后一个letter,而targe
 - input_line_tensor:大小为[line_length,1,n_letters] an array of one_hot vector
 - target_line_tensor:为一维Longtensor,其大小为Line_length,元素为letter在all_letters的索引
 
+
 ![](img\generate_name_input_output.png)
 
 因为有EOS符号，所以在处理训练集会有很多种不同的方法，这里选择处理方式如下，另input_tensor是定长的，而输出长度不是固定的。
 
-`
+
 
 ```python
 all_letters = string.ascii_letters + " .,;'-"
@@ -72,11 +74,10 @@ def targetTensor(line):
     return torch.LongTensor(letter_indexes)
 ```
 
-`
+
 
 我们在每一步时间节点都进行了预测，因此需要把每个时间节点的loss累积，而autograd可以累积每一步的loss并在最后后向传播即可计算梯度。每个时间节点的输出是在字典所有字母上的概率分布。
 
-`
 
 ```python
 def train(category_tensor,input_line_tensor,target_line_tensor):    		 	target_line_tensor.unsqueeze_(-1)#[line_length] ----> [line_length,1]          hidden=rnn.initHidden()    
@@ -90,7 +91,7 @@ def train(category_tensor,input_line_tensor,target_line_tensor):    		 	target_l
 #以上为一个epoch的训练
 ```
 
-`
+
 
 generate部分：对每个时间节点产生的output串在一起就是生成的名字，步骤如下：
 
@@ -127,17 +128,17 @@ pairs:[ line_countx2 ]
 
 seq2seq结构：将input_tensor输入到encoder,可以得到一个context vector，理想情况下可以包含整个输入语句的含义，Decoder预测输出翻译后的语句
 
-![](D:\project\pytorch_nlp_tutorial\img\seq2seq.png)
+![](img\seq2seq.png)
 
 下面是encoder部分的网络结构，其中gru可以换成LSTM
 
-![](D:\project\pytorch_nlp_tutorial\img\encoder-network.png)
+![](img\encoder-network.png)
 
 
 
 下面是没有attention机制的decoder
 
-![](D:\project\pytorch_nlp_tutorial\img\decoder-network.png)
+![](img\decoder-network.png)
 
 
 
@@ -155,11 +156,11 @@ input语句输入到encoder,即在所有的时间节点，encoder RNN对于输�
 
 note:下面这张图的网络结构是来自于pytorch tutorial,链接在文章最低端，其计算对齐分数的方式和下面讲解的都不同。
 
-![](D:\project\pytorch_nlp_tutorial\img\attention-decoder-network.png)
+![](img\attention-decoder-network.png)
 
 ##### 注意力机制：
 
-![](D:\project\pytorch_nlp_tutorial\img\Types of attention.jpg)
+![](img\Types of attention.jpg)
 
 Bahdanau和Luong最主要的区别是
 
@@ -181,10 +182,10 @@ Bahdanau和Luong最主要的区别是
    $$
    score_{aligment}=W_{combined}⋅tanh(W_{decoder}⋅
    H_{decoder}+W_{encoder}⋅
-   H_{encoder})
-   $$
+   H_{encoder})
+$$
    其实可以这样理解计算对齐分数的方式：拿所有encoder output里所有vector和decoder hidden state计算相似度，越相似的分数越高，即我们应该把注意力放在分数高的encoder outputs部分
-
+   
 3. 利用softmax层得到attention weights
 
 4. 计算语义向量（ context vector）
@@ -201,7 +202,7 @@ Bahdanau和Luong最主要的区别是
 
    下面这张图详细描述了具体过程
 
-   ![](D:\project\pytorch_nlp_tutorial\img\Flow of calculating attention weights in bahdanau attetion.jpg)
+   ![](img\Flow of calculating attention weights in bahdanau attetion.jpg)
 
 ##### Luong attention
 
@@ -222,13 +223,11 @@ Loung attention有三种计算注意力的方式：
   socre_{alignment}=H_{encoder} ⋅ H_{decoder}
   $$
   
-
 - general ：和dot类似,只不过加了一个权重矩阵
   $$
   socre_{alignment}=W（H_{encoder} ⋅ H_{decoder}）
   $$
   
-
 - concat：这种方式和Bahdanau attention很类似只不过没有各自的参数矩阵，表明encoder outputs和decoder hidden state共享权重矩阵$W_{combined}$
   $$
   score_{aligment}=W ⋅
