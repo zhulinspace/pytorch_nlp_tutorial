@@ -1,5 +1,5 @@
-公式显示用mathjax插件，[地址](https://chrome.google.com/webstore/detail/mathjax-plugin-for-github/ioemnmodlmafdkllaclgeombjnmnbima/related)
-无法科学上网：查看我[博客地址](https://blog.csdn.net/zhulinzhulinlin/article/details/104135594)
+[mathjax插件地址（可显示公式）](https://chrome.google.com/webstore/detail/mathjax-plugin-for-github/ioemnmodlmafdkllaclgeombjnmnbima/related)
+公式无法显示可以查看我[博客](https://blog.csdn.net/zhulinzhulinlin/article/details/104135594)
 # pytorch_nlp_tutorial
 
 ### classify name
@@ -171,7 +171,7 @@ note:下面这张图的网络结构是来自于pytorch tutorial,链接在文章�
 
 ![](https://github.com/zhulinspace/pytorch_nlp_tutorial/blob/master/img/attention-decoder-network.png)
 
-##### 注意力机制：
+##### 注意力机制（以下讨论的都是global /soft attention）
 
 ![](https://github.com/zhulinspace/pytorch_nlp_tutorial/blob/master/img/types.png)
 
