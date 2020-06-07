@@ -10,6 +10,8 @@ RNN由两个线性层组成。输入[input,hidden],输出[output,hidden]
 
 每个timestamp 输入都是一个letter（eg.‘ a’），用one_hot vector表示,输出output是在所有语言类别的概率分布
 
+![在这里插入图片描述](https://img-blog.csdnimg.cn/20200201165233959.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3podWxpbnpodWxpbmxpbg==,size_16,color_FFFFFF,t_70)
+
 ![](https://github.com/zhulinspace/pytorch_nlp_tutorial/blob/master/img/classfy_name_network'.png)
 
 输入序列（line),line ,eg for 'Adam' ,输入line需转化为line_tensor，其大小为[line_length x1 x n_letters]，多余的维度1是因为在pytorch中，所有数据都必须是batch_size的  ：That extra 1 dimension is because PyTorch assumes everything is in batches - we’re just using a batch size of 1 here. 
